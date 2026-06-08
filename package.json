@@ -1,0 +1,10 @@
+{
+  "name": "germany-cs-university-map",
+  "private": true,
+  "scripts": {
+    "build": "node build.js"
+  },
+  "devDependencies": {
+    "javascript-obfuscator": "^4.1.1"
+  }
+}
