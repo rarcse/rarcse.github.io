@@ -2,7 +2,8 @@
   "name": "germany-cs-university-map",
   "private": true,
   "scripts": {
-    "build": "node build.js"
+    "build": "node build.js",
+    "start": "npx --yes serve . -l 8080"
   },
   "devDependencies": {
     "javascript-obfuscator": "^4.1.1"
