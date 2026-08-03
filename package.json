@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "build": "node build.js",
+    "build:pathway": "node pathway-de/build.js",
+    "build:all": "node build.js && node pathway-de/build.js",
     "start": "npx --yes serve . -l 8080"
   },
   "devDependencies": {

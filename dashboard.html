@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #0f1c24;
+      --ink-soft: #243540;
+      --panel: #132028;
+      --panel-2: #1a2c36;
+      --line: rgba(255, 255, 255, 0.08);
+      --text: #e8f0f4;
+      --muted: #8aa0ad;
+      --accent: #2bb8a9;
+      --accent-2: #f0a05a;
+      --danger: #e06b6b;
+      --ok: #5ec98a;
+      --sidebar-w: 260px;
+      --topbar-h: 64px;
+      --radius: 10px;
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+      --font-display: "Figtree", sans-serif;
+      --font-body: "IBM Plex Sans", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at -10% -20%, rgba(43, 184, 169, 0.16), transparent 55%),
+        radial-gradient(900px 500px at 110% 0%, rgba(240, 160, 90, 0.12), transparent 50%),
+        linear-gradient(160deg, #0b151b 0%, #122028 45%, #0e1a21 100%);
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input {
+      font: inherit;
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: var(--sidebar-w) 1fr;
+      height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background: linear-gradient(180deg, rgba(19, 32, 40, 0.96), rgba(15, 28, 36, 0.98));
+      border-right: 1px solid var(--line);
+      padding: 1.25rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      position: relative;
+      z-index: 20;
+      transition: transform 0.28s ease;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.35rem 0.5rem;
+    }
+
+    .brand-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      background:
+        linear-gradient(135deg, var(--accent), #1f8f84 55%, var(--accent-2));
+      display: grid;
+      place-items: center;
+      font-family: var(--font-display);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      box-shadow: 0 6px 18px rgba(43, 184, 169, 0.28);
+    }
+
+    .brand-text {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .brand-text span {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-top: 0.15rem;
+    }
+
+    .nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      flex: 1;
+    }
+
+    .nav-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      padding: 0.75rem 0.85rem 0.4rem;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.7rem 0.85rem;
+      border-radius: 8px;
+      color: var(--muted);
+      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+
+    .nav-item svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      opacity: 0.85;
+    }
+
+    .nav-item:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      transform: translateX(2px);
+    }
+
+    .nav-item.active {
+      background: linear-gradient(90deg, rgba(43, 184, 169, 0.18), rgba(43, 184, 169, 0.05));
+      color: var(--text);
+      box-shadow: inset 3px 0 0 var(--accent);
+    }
+
+    .sidebar-footer {
+      padding: 0.75rem;
+      border-top: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #3a5a68, #1e3642);
+      display: grid;
+      place-items: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text);
+      border: 1px solid var(--line);
+    }
+
+    .user-meta {
+      min-width: 0;
+    }
+
+    .user-meta strong {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .user-meta small {
+      color: var(--muted);
+      font-size: 0.75rem;
+    }
+
+    /* Main */
+    .main {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      height: 100vh;
+    }
+
+    .topbar {
+      height: var(--topbar-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0 1.5rem;
+      border-bottom: 1px solid var(--line);
+      background: rgba(15, 28, 36, 0.55);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      min-width: 0;
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text);
+      border-radius: 8px;
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .page-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .page-title small {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--muted);
+      margin-top: 0.1rem;
+    }
+
+    .search {
+      flex: 1;
+      max-width: 420px;
+      position: relative;
+    }
+
+    .search input {
+      width: 100%;
+      height: 40px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text);
+      padding: 0 0.95rem 0 2.4rem;
+      outline: none;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .search input::placeholder {
+      color: var(--muted);
+    }
+
+    .search input:focus {
+      border-color: rgba(43, 184, 169, 0.45);
+      background: rgba(43, 184, 169, 0.06);
+    }
+
+    .search svg {
+      position: absolute;
+      left: 0.85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      color: var(--muted);
+      pointer-events: none;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .icon-btn:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.14);
+    }
+
+    .icon-btn .dot {
+      position: absolute;
+      top: 9px;
+      right: 9px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent-2);
+      box-shadow: 0 0 0 2px #132028;
+    }
+
+    .content {
+      flex: 1;
+      overflow: auto;
+      padding: 1.5rem;
+      scroll-behavior: smooth;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .stat {
+      padding: 1.1rem 1.15rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(160deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.01));
+      animation: rise 0.55s ease both;
+    }
+
+    .stat:nth-child(2) { animation-delay: 0.06s; }
+    .stat:nth-child(3) { animation-delay: 0.12s; }
+    .stat:nth-child(4) { animation-delay: 0.18s; }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 0.8rem;
+      margin-bottom: 0.55rem;
+    }
+
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 0.45rem;
+    }
+
+    .stat-delta {
+      font-size: 0.78rem;
+      color: var(--ok);
+    }
+
+    .stat-delta.down {
+      color: var(--danger);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 1rem;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(19, 32, 40, 0.55);
+      padding: 1.15rem;
+      animation: rise 0.6s ease both;
+      animation-delay: 0.2s;
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .panel-head h2 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .panel-head p {
+      color: var(--muted);
+      font-size: 0.78rem;
+      margin-top: 0.2rem;
+    }
+
+    .chip {
+      font-size: 0.72rem;
+      color: var(--accent);
+      border: 1px solid rgba(43, 184, 169, 0.3);
+      background: rgba(43, 184, 169, 0.08);
+      padding: 0.3rem 0.55rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .chart {
+      height: 220px;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      align-items: end;
+      gap: 0.45rem;
+      padding: 0.5rem 0.15rem 0;
+    }
+
+    .bar {
+      border-radius: 6px 6px 2px 2px;
+      background: linear-gradient(180deg, var(--accent), rgba(43, 184, 169, 0.25));
+      min-height: 12%;
+      transition: transform 0.2s ease, filter 0.2s ease;
+      animation: grow 0.7s ease both;
+    }
+
+    .bar:hover {
+      transform: scaleY(1.04);
+      filter: brightness(1.12);
+    }
+
+    .activity {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .activity-item {
+      display: grid;
+      grid-template-columns: 36px 1fr auto;
+      gap: 0.75rem;
+      align-items: start;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .activity-item:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .activity-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--line);
+      color: var(--accent);
+    }
+
+    .activity-body strong {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-bottom: 0.15rem;
+    }
+
+    .activity-body span {
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    .activity-time {
+      color: var(--muted);
+      font-size: 0.72rem;
+      white-space: nowrap;
+    }
+
+    .table-wrap {
+      margin-top: 1rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(19, 32, 40, 0.55);
+      overflow: hidden;
+      animation: rise 0.65s ease both;
+      animation-delay: 0.28s;
+    }
+
+    .table-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.15rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .table-head h2 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .btn {
+      height: 34px;
+      padding: 0 0.85rem;
+      border-radius: 8px;
+      border: 1px solid rgba(43, 184, 169, 0.35);
+      background: rgba(43, 184, 169, 0.12);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 0.82rem;
+      font-weight: 500;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .btn:hover {
+      background: rgba(43, 184, 169, 0.2);
+      transform: translateY(-1px);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 0.85rem 1.15rem;
+      font-size: 0.86rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    th {
+      color: var(--muted);
+      font-weight: 500;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.78rem;
+    }
+
+    .status::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .status.live { color: var(--ok); }
+    .status.pending { color: var(--accent-2); }
+    .status.paused { color: var(--muted); }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      z-index: 15;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes grow {
+      from { transform: scaleY(0.3); transform-origin: bottom; opacity: 0.4; }
+      to { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
+    }
+
+    @media (max-width: 1100px) {
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: fixed;
+        inset: 0 auto 0 0;
+        width: var(--sidebar-w);
+        transform: translateX(-105%);
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .overlay.show {
+        display: block;
+      }
+
+      .menu-toggle {
+        display: inline-flex;
+      }
+
+      .search {
+        display: none;
+      }
+
+      .content {
+        padding: 1rem;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+      }
+
+      table {
+        min-width: 640px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay" id="overlay"></div>
+
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">A</div>
+        <div class="brand-text">
+          Adminly
+          <span>Control panel</span>
+        </div>
+      </div>
+
+      <nav class="nav" aria-label="Main">
+        <div class="nav-label">Overview</div>
+        <a class="nav-item active" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z"/></svg>
+          Dashboard
+        </a>
+        <a class="nav-item" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5m0 14h16M8 16V9m4 7V7m4 9v-5"/></svg>
+          Analytics
+        </a>
+        <a class="nav-item" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg>
+          Projects
+        </a>
+
+        <div class="nav-label">Manage</div>
+        <a class="nav-item" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 19v-1a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v1"/><circle cx="9.5" cy="7.5" r="3.5"/><path d="M19 11v6m-3-3h6"/></svg>
+          Team
+        </a>
+        <a class="nav-item" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h10M4 17h7"/><circle cx="18" cy="16" r="3"/></svg>
+          Reports
+        </a>
+        <a class="nav-item" href="#">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 3v2m0 14v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M3 12h2m14 0h2M4.9 19.1l1.4-1.4m11.4-11.4 1.4-1.4"/></svg>
+          Settings
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="avatar">RA</div>
+        <div class="user-meta">
+          <strong>Ridwan Ahmed</strong>
+          <small>Administrator</small>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="menu-toggle" id="menuToggle" aria-label="Open menu">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          </button>
+          <div class="page-title">
+            Dashboard
+            <small>Welcome back — here’s what’s happening today</small>
+          </div>
+        </div>
+
+        <div class="search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input type="search" placeholder="Search projects, people, reports…">
+        </div>
+
+        <div class="topbar-actions">
+          <button class="icon-btn" aria-label="Notifications">
+            <span class="dot"></span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9a6 6 0 1 1 12 0c0 7 3 7 3 7H3s3 0 3-7"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+          </button>
+          <button class="icon-btn" aria-label="Messages">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <main class="content">
+        <section class="stats" aria-label="Key metrics">
+          <article class="stat">
+            <div class="stat-label">Total revenue</div>
+            <div class="stat-value">$48.2k</div>
+            <div class="stat-delta">↑ 12.4% vs last month</div>
+          </article>
+          <article class="stat">
+            <div class="stat-label">Active users</div>
+            <div class="stat-value">3,842</div>
+            <div class="stat-delta">↑ 8.1% vs last week</div>
+          </article>
+          <article class="stat">
+            <div class="stat-label">Open tickets</div>
+            <div class="stat-value">27</div>
+            <div class="stat-delta down">↓ 3 waiting reply</div>
+          </article>
+          <article class="stat">
+            <div class="stat-label">Conversion</div>
+            <div class="stat-value">4.6%</div>
+            <div class="stat-delta">↑ 0.4 pts this week</div>
+          </article>
+        </section>
+
+        <section class="grid">
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <h2>Traffic overview</h2>
+                <p>Visits across the last 12 weeks</p>
+              </div>
+              <span class="chip">Live</span>
+            </div>
+            <div class="chart" aria-hidden="true">
+              <div class="bar" style="height:42%; animation-delay:0.05s"></div>
+              <div class="bar" style="height:58%; animation-delay:0.08s"></div>
+              <div class="bar" style="height:36%; animation-delay:0.11s"></div>
+              <div class="bar" style="height:72%; animation-delay:0.14s"></div>
+              <div class="bar" style="height:64%; animation-delay:0.17s"></div>
+              <div class="bar" style="height:48%; animation-delay:0.2s"></div>
+              <div class="bar" style="height:80%; animation-delay:0.23s"></div>
+              <div class="bar" style="height:55%; animation-delay:0.26s"></div>
+              <div class="bar" style="height:68%; animation-delay:0.29s"></div>
+              <div class="bar" style="height:90%; animation-delay:0.32s"></div>
+              <div class="bar" style="height:74%; animation-delay:0.35s"></div>
+              <div class="bar" style="height:86%; animation-delay:0.38s"></div>
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <h2>Recent activity</h2>
+                <p>Latest updates from your team</p>
+              </div>
+            </div>
+            <div class="activity">
+              <div class="activity-item">
+                <div class="activity-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>
+                </div>
+                <div class="activity-body">
+                  <strong>New project created</strong>
+                  <span>Atlas redesign kicked off by Maya</span>
+                </div>
+                <div class="activity-time">2m</div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m5 13 4 4L19 7"/></svg>
+                </div>
+                <div class="activity-body">
+                  <strong>Invoice paid</strong>
+                  <span>$2,400 from Northwind Co.</span>
+                </div>
+                <div class="activity-time">1h</div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 19v-1a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v1"/><circle cx="9.5" cy="7.5" r="3.5"/></svg>
+                </div>
+                <div class="activity-body">
+                  <strong>Team invite sent</strong>
+                  <span>3 new members pending acceptance</span>
+                </div>
+                <div class="activity-time">3h</div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg>
+                </div>
+                <div class="activity-body">
+                  <strong>Deploy scheduled</strong>
+                  <span>Production release tonight at 22:00</span>
+                </div>
+                <div class="activity-time">5h</div>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <section class="table-wrap">
+          <div class="table-head">
+            <h2>Active projects</h2>
+            <button class="btn">New project</button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Project</th>
+                <th>Owner</th>
+                <th>Progress</th>
+                <th>Status</th>
+                <th>Due</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Atlas redesign</td>
+                <td>Maya Chen</td>
+                <td>72%</td>
+                <td><span class="status live">In progress</span></td>
+                <td>Aug 12</td>
+              </tr>
+              <tr>
+                <td>API billing v2</td>
+                <td>Jon Rivera</td>
+                <td>41%</td>
+                <td><span class="status pending">Review</span></td>
+                <td>Aug 20</td>
+              </tr>
+              <tr>
+                <td>Support portal</td>
+                <td>Lina Park</td>
+                <td>18%</td>
+                <td><span class="status live">In progress</span></td>
+                <td>Sep 02</td>
+              </tr>
+              <tr>
+                <td>Mobile onboarding</td>
+                <td>Sam Ortiz</td>
+                <td>90%</td>
+                <td><span class="status paused">Paused</span></td>
+                <td>Aug 08</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+    const menuToggle = document.getElementById("menuToggle");
+
+    function closeSidebar() {
+      sidebar.classList.remove("open");
+      overlay.classList.remove("show");
+    }
+
+    function openSidebar() {
+      sidebar.classList.add("open");
+      overlay.classList.add("show");
+    }
+
+    menuToggle.addEventListener("click", () => {
+      if (sidebar.classList.contains("open")) closeSidebar();
+      else openSidebar();
+    });
+
+    overlay.addEventListener("click", closeSidebar);
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 820) closeSidebar();
+    });
+  </script>
+</body>
+</html>
