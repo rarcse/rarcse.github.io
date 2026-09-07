@@ -1,6 +1,6 @@
 {
-  "name": "germany-cs-university-map",
-  "version": "1.4.0",
+  "name": "germany-unihub",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "build": "node build.js",
