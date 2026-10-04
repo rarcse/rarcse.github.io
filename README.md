@@ -79,7 +79,7 @@ https://rarcse.github.io/
 
 <p align="center">
   <a href="https://rarcse.github.io/">
-    <img src="https://rarcse.github.io/preview.png" alt="Germany UniHub">
+    <img src="https://rarcse.github.io/preview.jpg" alt="Germany UniHub">
   </a>
 </p>
 
