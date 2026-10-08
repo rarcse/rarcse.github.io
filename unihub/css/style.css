@@ -143,7 +143,6 @@ select {
 
 .nav a,
 .nav-guide,
-.header-cta,
 .header-programmes,
 .nav-programmes {
   text-decoration: none;
@@ -168,13 +167,11 @@ select {
 
 .nav a:hover,
 .nav-guide:hover,
-.header-cta:hover,
 .nav-programmes:hover {
   color: var(--accent);
 }
 
-.nav-guide,
-.nav-browse {
+.nav-guide {
   display: none;
 }
 
@@ -223,7 +220,6 @@ select {
   flex-shrink: 0;
 }
 
-.header-cta,
 .header-watch,
 .header-guide {
   display: inline-flex;
@@ -262,7 +258,6 @@ select {
 }
 
 .header-watch:hover,
-.header-cta:hover,
 .header-guide:hover,
 .header-watch[aria-pressed="true"] {
   color: var(--accent-deep);
@@ -2067,13 +2062,11 @@ body.nav-open .nav-toggle .nav-toggle-close {
     display: inline-grid;
   }
 
-  .header-cta,
   .header-guide {
     display: none;
   }
 
-  .nav-guide,
-  .nav-browse {
+  .nav-guide {
     display: flex;
     align-items: center;
     gap: 0.45rem;
