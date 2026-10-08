@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta
+      name="description"
+      content="Germany UniHub — BSc/MSc university finder for international programmes in Germany."
+    />
+    <meta property="og:title" content="Germany UniHub" />
+    <meta property="og:description" content="BSc/MSc university finder for programmes in Germany." />
+    <meta property="og:image" content="assets/og-banner.jpg" />
+    <link rel="icon" href="assets/logo.png" type="image/png" />
+    <title>Germany UniHub — BSc/MSc university finder</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top">
+        <img class="brand-logo" src="assets/logo.png" alt="" width="40" height="40" />
+        <span class="brand-text">
+          <span class="brand-name"><span class="brand-full">Germany </span><em>UniHub</em></span>
+          <span class="brand-tag">BSc/MSc university finder</span>
+        </span>
+      </a>
+      <nav class="nav" id="site-nav">
+        <a href="#programmes">Programmes</a>
+        <a
+          class="nav-special"
+          href="https://rarcse.github.io/"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Special Msc CS Programs</a
+        >
+        <button type="button" class="nav-guide" id="nav-open-guide">UniGuide</button>
+        <a class="nav-browse" href="#programmes">Browse</a>
+      </nav>
+      <div class="header-actions">
+        <div class="site-views" id="site-views" hidden title="Page views">
+          <span class="site-views-dot" aria-hidden="true"></span>
+          <span id="site-views-text"></span>
+        </div>
+        <button type="button" class="header-guide" id="open-guide" title="Open UniGuide">
+          UniGuide
+        </button>
+        <button type="button" class="header-watch" id="watchlist-toggle" aria-pressed="false" title="Watchlist">
+          <span class="watch-label">Watchlist</span>
+          <span class="watch-count" id="watch-count">0</span>
+        </button>
+        <a class="header-cta" href="#programmes">Browse</a>
+        <button
+          type="button"
+          class="nav-toggle"
+          id="nav-toggle"
+          aria-expanded="false"
+          aria-controls="site-nav"
+          aria-label="Open menu"
+        >
+          <svg class="nav-toggle-menu" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path
+              d="M4 7.5h16M4 12h16M4 16.5h10"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+            />
+          </svg>
+          <svg class="nav-toggle-close" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path
+              d="M6.4 6.4a1 1 0 0 1 1.4 0L12 10.6l4.2-4.2a1 1 0 1 1 1.4 1.4L13.4 12l4.2 4.2a1 1 0 0 1-1.4 1.4L12 13.4l-4.2 4.2a1 1 0 0 1-1.4-1.4L10.6 12 6.4 7.8a1 1 0 0 1 0-1.4Z"
+              fill="currentColor"
+            />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="programmes" id="programmes">
+        <div class="match-strip" id="match-strip" hidden>
+          <div class="match-strip-main">
+            <div class="match-strip-identity">
+              <span class="match-avatar" id="match-avatar" aria-hidden="true">U</span>
+              <div class="match-strip-copy">
+                <span class="match-eyebrow">Your match profile</span>
+                <strong class="match-name" id="match-name">Student</strong>
+                <p class="match-note" id="match-strip-summary"></p>
+              </div>
+            </div>
+            <div class="match-chips" id="match-chips" aria-label="Profile filters"></div>
+          </div>
+          <div class="match-strip-actions">
+            <button type="button" class="match-btn match-btn-edit" id="edit-guide">Edit</button>
+            <button type="button" class="match-btn match-btn-clear" id="clear-guide">Clear</button>
+          </div>
+        </div>
+
+        <div class="programmes-head">
+          <div>
+            <div class="programmes-title-row">
+              <h2>Programme search</h2>
+              <div class="catalog-stats" id="catalog-stats" aria-label="Catalog totals">
+                <span class="catalog-stat">
+                  <strong id="stat-universities">—</strong>
+                  <span>Universities</span>
+                </span>
+                <span class="catalog-stat">
+                  <strong id="stat-programmes">—</strong>
+                  <span>Programmes</span>
+                </span>
+              </div>
+            </div>
+            <p class="section-lead" id="programmes-lead">Find BSc and MSc universities &amp; programmes in Germany.</p>
+          </div>
+          <label class="search-field">
+            <span class="sr-only">Search programmes</span>
+            <input
+              id="q"
+              type="search"
+              placeholder="Search programme, university, city, or subject…"
+              autocomplete="off"
+            />
+          </label>
+        </div>
+
+        <div class="programmes-layout">
+          <aside class="filters" aria-label="Filters">
+            <button type="button" class="filters-toggle" id="filters-toggle" aria-expanded="false">
+              Filters
+              <span class="filters-toggle-hint">Show / hide</span>
+            </button>
+            <div class="filters-panel" id="filters-panel">
+              <div class="filters-top">
+                <h3>Filters</h3>
+                <button type="button" class="link-btn" id="clear-filters">Clear all</button>
+              </div>
+
+              <details class="filter-group" open>
+                <summary>Course type</summary>
+                <div class="filter-options" id="filter-type"></div>
+              </details>
+
+              <details class="filter-group" open>
+                <summary>Subject group</summary>
+                <div class="filter-options" id="filter-subject"></div>
+              </details>
+
+              <details class="filter-group" open>
+                <summary>Course language</summary>
+                <div class="filter-options" id="filter-lang"></div>
+              </details>
+
+              <details class="filter-group">
+                <summary>Tuition fees</summary>
+                <div class="filter-options" id="filter-fees"></div>
+              </details>
+
+              <details class="filter-group">
+                <summary>Beginning</summary>
+                <div class="filter-options" id="filter-beginning"></div>
+              </details>
+
+              <details class="filter-group">
+                <summary>City</summary>
+                <div class="filter-options scroll" id="filter-city"></div>
+              </details>
+            </div>
+          </aside>
+
+          <div class="results-panel">
+            <div class="results-toolbar">
+              <p class="results-count" id="results-count">Loading programmes…</p>
+              <div class="toolbar-controls">
+                <label>
+                  <span class="sr-only">Sort</span>
+                  <select id="sort">
+                    <option value="name">Sort by name</option>
+                    <option value="city">Sort by city</option>
+                    <option value="academy">Sort by institution</option>
+                  </select>
+                </label>
+                <label>
+                  <span class="sr-only">Per page</span>
+                  <select id="limit">
+                    <option value="10">10</option>
+                    <option value="25" selected>25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                  </select>
+                </label>
+                <div class="view-toggle" role="group" aria-label="View mode">
+                  <button type="button" class="view-btn is-active" data-view="list" aria-pressed="true">List</button>
+                  <button type="button" class="view-btn" data-view="grid" aria-pressed="false">Grid</button>
+                </div>
+              </div>
+            </div>
+
+            <div id="results" class="results results-list" aria-live="polite"></div>
+
+            <nav class="pagination" id="pagination" aria-label="Pagination"></nav>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="detail-dialog" class="detail-dialog">
+      <form method="dialog" class="detail-close-row">
+        <button value="close" class="detail-close" aria-label="Close details">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+            <path
+              d="M6.4 6.4a1 1 0 0 1 1.4 0L12 10.6l4.2-4.2a1 1 0 1 1 1.4 1.4L13.4 12l4.2 4.2a1 1 0 0 1-1.4 1.4L12 13.4l-4.2 4.2a1 1 0 0 1-1.4-1.4L10.6 12 6.4 7.8a1 1 0 0 1 0-1.4Z"
+              fill="currentColor"
+            />
+          </svg>
+        </button>
+      </form>
+      <div id="detail-content"></div>
+    </dialog>
+
+    <dialog id="watch-dialog" class="detail-dialog watch-dialog">
+      <form method="dialog" class="detail-close-row">
+        <button value="close" class="detail-close" aria-label="Close watchlist">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+            <path
+              d="M6.4 6.4a1 1 0 0 1 1.4 0L12 10.6l4.2-4.2a1 1 0 1 1 1.4 1.4L13.4 12l4.2 4.2a1 1 0 0 1-1.4 1.4L12 13.4l-4.2 4.2a1 1 0 0 1-1.4-1.4L10.6 12 6.4 7.8a1 1 0 0 1 0-1.4Z"
+              fill="currentColor"
+            />
+          </svg>
+        </button>
+      </form>
+      <div class="watch-drawer">
+        <header class="watch-drawer-head">
+          <div>
+            <p class="watch-kicker">Saved programmes</p>
+            <h2>Watchlist</h2>
+            <p class="watch-drawer-lead">Bookmark programmes, view them on a map, share a link, or download Excel.</p>
+          </div>
+          <div class="watch-drawer-actions">
+            <div class="watch-view-toggle" role="group" aria-label="Watchlist view">
+              <button type="button" class="watch-view-btn is-active" data-watch-view="list" aria-pressed="true">
+                List
+              </button>
+              <button type="button" class="watch-view-btn" data-watch-view="map" aria-pressed="false">
+                Map
+              </button>
+            </div>
+            <button type="button" class="btn btn-secondary" id="download-watchlist" disabled>
+              Download Excel
+            </button>
+            <button type="button" class="btn btn-primary" id="share-watchlist" disabled>Share link</button>
+          </div>
+        </header>
+        <p class="share-toast" id="share-toast" hidden>Link copied</p>
+        <div id="watch-list" class="watch-list" aria-live="polite"></div>
+        <div id="watch-map-panel" class="watch-map-panel" hidden>
+          <p class="watch-map-legend" id="watch-map-legend"></p>
+          <div id="watch-map" class="watch-map" role="img" aria-label="Map of saved programmes in Germany"></div>
+        </div>
+      </div>
+    </dialog>
+
+    <footer class="site-footer">
+      <p><strong>Germany UniHub</strong> — BSc/MSc university finder.</p>
+      <p class="footnote">Always verify deadlines and requirements on the official programme page before applying.</p>
+    </footer>
+
+    <dialog id="agent-dialog" class="agent-dialog" aria-label="UniGuide programme matching">
+      <div class="agent-shell">
+        <header class="agent-top">
+          <div class="agent-identity">
+            <div class="agent-avatar" aria-hidden="true">
+              <span class="agent-pulse"></span>
+              <img src="assets/logo.png" alt="" width="44" height="44" />
+            </div>
+            <div>
+              <strong>UniGuide</strong>
+              <p>BSc/MSc university finder</p>
+            </div>
+          </div>
+          <button type="button" class="agent-skip" id="agent-skip">Skip</button>
+        </header>
+
+        <div class="agent-progress" id="agent-progress" aria-hidden="true">
+          <span data-step="1"></span>
+          <span data-step="2"></span>
+          <span data-step="3"></span>
+          <span data-step="4"></span>
+          <span data-step="5"></span>
+        </div>
+
+        <div class="agent-thread" id="agent-thread" aria-live="polite"></div>
+        <div class="agent-composer" id="agent-composer"></div>
+      </div>
+    </dialog>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="dist/data.js"></script>
+    <script src="dist/app.js" defer></script>
+  </body>
+</html>
+
+
