@@ -1825,6 +1825,23 @@ body.drawer-open {
   padding: 2rem 0 3rem;
   border-top: 1px solid var(--line);
   color: var(--ink-soft);
+  display: grid;
+  gap: 0.45rem;
+  text-align: center;
+  justify-items: center;
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+.footer-credit {
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}
+
+.footer-credit em {
+  font-style: italic;
 }
 
 .header-spacer {
