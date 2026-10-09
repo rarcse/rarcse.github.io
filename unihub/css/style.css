@@ -85,9 +85,10 @@ select {
   align-items: center;
   gap: 1rem;
   padding: env(safe-area-inset-top, 0px) clamp(0.85rem, 3vw, 2rem) 0;
-  background: rgba(247, 250, 255, 0.92);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(213, 222, 234, 0.9);
+  background: rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid rgba(213, 222, 234, 0.55);
 }
 
 .brand {
@@ -508,6 +509,11 @@ select {
   flex-shrink: 0;
   margin-bottom: 1rem;
   padding-right: 2rem;
+}
+
+.watch-drawer-title {
+  min-width: 0;
+  flex: 1 1 12rem;
 }
 
 .watch-kicker {
@@ -1187,6 +1193,48 @@ select {
   content: "–";
 }
 
+.filter-search {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.45rem 0 0.15rem;
+}
+
+.filter-search input {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: 2.35rem;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  outline: none;
+}
+
+.filter-search input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(18, 131, 255, 0.14);
+}
+
+.filter-search-btn {
+  flex: 0 0 auto;
+  width: 2.35rem;
+  height: 2.35rem;
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, var(--line));
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  cursor: pointer;
+}
+
+.filter-search-btn:hover {
+  background: color-mix(in srgb, var(--accent) 18%, #fff);
+  border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+}
+
 .filter-options {
   display: grid;
   gap: 0.35rem;
@@ -1197,6 +1245,10 @@ select {
   max-height: 220px;
   overflow: auto;
   padding-right: 0.25rem;
+}
+
+.filter-options label[hidden] {
+  display: none !important;
 }
 
 .filter-options label {
@@ -2114,13 +2166,23 @@ body.nav-open .nav-toggle .nav-toggle-close {
     max-height: calc(100dvh - var(--header-h) - env(safe-area-inset-top, 0px));
     overflow: auto;
     overscroll-behavior: contain;
-    background: rgba(247, 250, 255, 0.97);
-    border-bottom: 1px solid var(--line);
-    backdrop-filter: blur(10px);
+  }
+
+  /* Parent header backdrop-filter blocks child blur — clear it while menu is open */
+  body.nav-open .site-header {
+    background: rgba(255, 255, 255, 0.55);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 
   body.nav-open .nav {
     display: flex;
+    z-index: 36;
+    background: rgba(255, 255, 255, 0.38);
+    -webkit-backdrop-filter: saturate(220%) blur(80px);
+    backdrop-filter: saturate(220%) blur(80px);
+    border-bottom: 2px solid var(--accent);
+    box-shadow: 0 16px 40px rgba(7, 21, 40, 0.12);
   }
 
   .nav-programmes,
@@ -2206,19 +2268,42 @@ body.nav-open .nav-toggle .nav-toggle-close {
     inset: 0;
   }
 
+  .watch-dialog .detail-close-row {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: auto;
+    width: auto;
+    margin: 0;
+    padding:
+      max(1.1rem, env(safe-area-inset-top, 0px))
+      1rem
+      0
+      0;
+  }
+
   .watch-drawer {
     min-height: 100dvh;
     height: 100%;
     max-height: 100dvh;
-    padding: 1.1rem 1rem max(1.25rem, env(safe-area-inset-bottom, 0px));
+    padding:
+      max(1.1rem, env(safe-area-inset-top, 0px))
+      1rem
+      max(1.25rem, env(safe-area-inset-bottom, 0px));
   }
 
   .watch-drawer-head {
     flex-direction: column;
     align-items: stretch;
-    padding-right: 2rem;
+    padding-right: 0;
     margin-bottom: 0.75rem;
-    gap: 0.7rem;
+    gap: 0.85rem;
+  }
+
+  .watch-drawer-title {
+    flex: none;
+    width: 100%;
+    padding-right: 2.85rem;
   }
 
   .watch-drawer-actions {
@@ -2228,7 +2313,7 @@ body.nav-open .nav-toggle .nav-toggle-close {
   }
 
   .watch-list {
-    padding-bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
+    padding: 0.1rem 0 max(1.25rem, env(safe-area-inset-bottom, 0px));
   }
 
   .watch-drawer-actions .btn {
@@ -2576,6 +2661,18 @@ body.nav-open .nav-toggle .nav-toggle-close {
     font-size: 1.45rem;
   }
 
+  .watch-dialog .detail-close-row {
+    padding:
+      max(1rem, env(safe-area-inset-top, 0px))
+      0.9rem
+      0
+      0;
+  }
+
+  .watch-drawer-title {
+    padding-right: 2.7rem;
+  }
+
   .detail-hero {
     aspect-ratio: auto;
     min-height: 0;
@@ -2612,9 +2709,15 @@ body.nav-open .nav-toggle .nav-toggle-close {
     grid-template-columns: 1fr;
   }
 
-  .detail-main,
-  .watch-drawer {
+  .detail-main {
     padding: 1rem 0.9rem max(1.25rem, env(safe-area-inset-bottom, 0px));
+  }
+
+  .watch-drawer {
+    padding:
+      max(1rem, env(safe-area-inset-top, 0px))
+      0.9rem
+      max(1.25rem, env(safe-area-inset-bottom, 0px));
   }
 
   .watch-item-open {

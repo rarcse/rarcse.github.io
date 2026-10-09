@@ -276,7 +276,22 @@
 
               <details class="filter-group" open>
                 <summary>Subject group</summary>
-                <div class="filter-options" id="filter-subject"></div>
+                <div class="filter-search">
+                  <label class="sr-only" for="subject-filter-search">Search subject groups</label>
+                  <input
+                    type="search"
+                    id="subject-filter-search"
+                    placeholder="Search subjects…"
+                    autocomplete="off"
+                  />
+                  <button type="button" class="filter-search-btn" id="subject-filter-search-btn" aria-label="Search subjects">
+                    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                      <circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8" />
+                      <path d="M16.2 16.2 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                    </svg>
+                  </button>
+                </div>
+                <div class="filter-options scroll" id="filter-subject"></div>
               </details>
 
               <details class="filter-group" open>
@@ -364,7 +379,7 @@
       </form>
       <div class="watch-drawer">
         <header class="watch-drawer-head">
-          <div>
+          <div class="watch-drawer-title">
             <p class="watch-kicker">Saved programmes</p>
             <h2>Watchlist</h2>
             <p class="watch-drawer-lead">Bookmark programmes, view them on a map, share a link, or download Excel.</p>
@@ -467,6 +482,32 @@
         window.addEventListener("load", function () {
           setTimeout(hideLoader, 8000);
         });
+      })();
+
+      (function () {
+        var input = document.getElementById("subject-filter-search");
+        var btn = document.getElementById("subject-filter-search-btn");
+        var list = document.getElementById("filter-subject");
+        if (!input || !list) return;
+
+        function applySubjectSearch() {
+          var q = (input.value || "").trim().toLowerCase();
+          list.querySelectorAll("label").forEach(function (label) {
+            var text = (label.textContent || "").toLowerCase();
+            label.hidden = Boolean(q) && text.indexOf(q) === -1;
+          });
+        }
+
+        input.addEventListener("input", applySubjectSearch);
+        input.addEventListener("search", applySubjectSearch);
+        if (btn) {
+          btn.addEventListener("click", function () {
+            input.focus();
+            applySubjectSearch();
+          });
+        }
+
+        new MutationObserver(applySubjectSearch).observe(list, { childList: true });
       })();
     </script>
   </body>
