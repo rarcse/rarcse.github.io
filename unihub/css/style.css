@@ -85,9 +85,7 @@ select {
   align-items: center;
   gap: 1rem;
   padding: env(safe-area-inset-top, 0px) clamp(0.85rem, 3vw, 2rem) 0;
-  background: rgba(255, 255, 255, 0.72);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  backdrop-filter: saturate(180%) blur(20px);
+  background: rgba(255, 255, 255, 0.92);
   border-bottom: 1px solid rgba(213, 222, 234, 0.55);
 }
 
@@ -140,6 +138,30 @@ select {
 .nav {
   /* Flatten into header flex so left/right clusters can be ordered */
   display: contents;
+}
+
+.nav-drawer-head {
+  display: none;
+}
+
+.nav-drawer-close {
+  display: none;
+}
+
+.nav-drawer-links {
+  display: contents;
+}
+
+.nav-item-icon {
+  display: none;
+}
+
+.nav-backdrop {
+  display: none;
+}
+
+.nav-item-label {
+  min-width: 0;
 }
 
 .nav a,
@@ -2020,6 +2042,18 @@ body.drawer-open {
   font-style: italic;
 }
 
+.footer-byline {
+  margin-top: 0.15rem;
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.footer-byline em {
+  font-style: italic;
+  font-weight: 600;
+  color: var(--accent-deep);
+}
+
 .header-spacer {
   order: 9;
   flex: 1 1 auto;
@@ -2056,6 +2090,17 @@ body.drawer-open {
   border-radius: 50%;
   background: var(--accent);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+.site-views-num {
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  color: var(--accent-deep);
+}
+
+.site-views-label {
+  font-weight: 600;
+  color: var(--muted);
 }
 
 .footnote {
@@ -2250,7 +2295,7 @@ body.nav-open .nav-toggle .nav-toggle-close {
   .nav-guide {
     display: flex;
     align-items: center;
-    gap: 0.45rem;
+    gap: 0.75rem;
   }
 
   .header-spacer {
@@ -2279,71 +2324,246 @@ body.nav-open .nav-toggle .nav-toggle-close {
     display: none;
   }
 
+  .nav-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 55;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    background: rgba(244, 247, 251, 0.28);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.28s ease, visibility 0.28s ease;
+  }
+
+  body.nav-open .nav-backdrop {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  /* Keep header + white menu panel above the blurred backdrop */
+  body.nav-open .site-header {
+    z-index: 60;
+  }
+
   .nav {
     position: fixed;
-    top: calc(var(--header-h) + env(safe-area-inset-top, 0px));
-    left: 0;
-    right: 0;
-    z-index: 35;
-    display: none;
+    inset: 0 0 0 auto;
+    z-index: 61;
+    display: flex;
     flex: none;
     flex-direction: column;
     align-items: stretch;
-    gap: 0;
+    gap: 0.85rem;
+    width: min(22rem, 86vw);
+    height: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+    min-height: 100dvh;
     margin: 0;
-    padding: 0.5rem 1rem max(1rem, env(safe-area-inset-bottom, 0px));
-    max-height: calc(100dvh - var(--header-h) - env(safe-area-inset-top, 0px));
+    padding:
+      max(1.15rem, env(safe-area-inset-top, 0px))
+      1.15rem
+      max(1.15rem, env(safe-area-inset-bottom, 0px));
     overflow: auto;
     overscroll-behavior: contain;
-  }
-
-  /* Parent header backdrop-filter blocks child blur — clear it while menu is open */
-  body.nav-open .site-header {
-    background: rgba(255, 255, 255, 0.55);
+    background: #ffffff;
+    color: var(--ink);
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
+    isolation: isolate;
+    border: 0;
+    border-radius: 0;
+    border-left: 0;
+    box-shadow: -12px 0 40px rgba(0, 0, 0, 0.35);
+    transform: translateX(104%);
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+      transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0.32s;
   }
 
   body.nav-open .nav {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  body.nav-open {
+    overflow: hidden;
+  }
+
+  .nav-drawer-head {
     display: flex;
-    z-index: 36;
-    background: rgba(255, 255, 255, 0.38);
-    -webkit-backdrop-filter: saturate(220%) blur(80px);
-    backdrop-filter: saturate(220%) blur(80px);
-    border-bottom: 2px solid var(--accent);
-    box-shadow: 0 16px 40px rgba(7, 21, 40, 0.12);
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex: 0 0 auto;
+    padding: 0.15rem 0 0.35rem;
+  }
+
+  .nav-drawer-heading {
+    display: grid;
+    gap: 0.2rem;
+    min-width: 0;
+  }
+
+  .nav-drawer-close {
+    display: inline-grid;
+    place-items: center;
+    width: 2.35rem;
+    height: 2.35rem;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: #fff;
+    color: var(--accent-deep);
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(7, 21, 40, 0.06);
+  }
+
+  .nav-drawer-close:hover {
+    background: var(--accent-soft);
+    border-color: color-mix(in srgb, var(--accent) 40%, var(--line));
+    color: var(--accent);
+  }
+
+  .nav-drawer-close svg {
+    display: block;
+  }
+
+  .nav-drawer-kicker {
+    margin: 0;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .nav-drawer-title {
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--accent-deep);
+  }
+
+  .nav-drawer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .nav-item-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 10px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .nav-item-icon svg {
+    display: block;
   }
 
   .nav-programmes,
   .nav a,
   .nav-guide {
     order: initial;
-    padding: 0.85rem 0.25rem;
-    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
     width: 100%;
+    min-height: 3.15rem;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid color-mix(in srgb, var(--line) 88%, transparent);
+    border-radius: 14px;
+    background: #fff;
+    color: var(--accent-deep);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.5;
+    box-shadow: 0 4px 14px rgba(7, 21, 40, 0.04);
+  }
+
+  .nav-programmes:hover,
+  .nav a:hover,
+  .nav-guide:hover {
+    color: var(--accent-deep);
+    border-color: color-mix(in srgb, var(--accent) 35%, var(--line));
+    background: color-mix(in srgb, var(--accent-soft) 55%, #fff);
   }
 
   .nav a.nav-special {
     order: initial;
-    width: fit-content;
-    max-width: 100%;
-    padding: 0.45rem 0.85rem;
-    border-bottom: 0;
-    margin: 0.55rem 0 0.45rem;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid transparent;
+    border-radius: 14px;
     color: #fff;
-    background: linear-gradient(135deg, #1283ff, #0d6ee8);
+    background: linear-gradient(135deg, #123a6b 0%, var(--accent-deep) 45%, #0d5fbd 100%);
+    box-shadow: 0 10px 22px rgba(10, 31, 61, 0.2);
+    animation: none;
+  }
+
+  .nav a.nav-special:hover {
+    color: #fff;
+    filter: brightness(1.05);
+  }
+
+  .nav a.nav-special .nav-item-icon {
+    background: rgba(255, 255, 255, 0.16);
+    color: #fff;
+  }
+
+  .nav-guide .guide-ai-icon {
+    width: 1.1rem;
+    height: 1.1rem;
+    color: inherit;
   }
 
   .nav .site-views {
     order: initial;
-    margin: 0.35rem 0 0;
+    margin-top: auto;
     margin-left: 0;
     width: 100%;
     justify-content: flex-start;
-    border-radius: 12px;
-    padding: 0.85rem 0.75rem;
-    font-size: 0.92rem;
-    border-bottom: 0;
+    gap: 0.55rem;
+    min-height: 3.2rem;
+    border-radius: 14px;
+    padding: 0.9rem 0.95rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: normal;
+    border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--line));
+    background: color-mix(in srgb, var(--accent-soft) 70%, #fff);
+  }
+
+  .nav .site-views-num {
+    font-size: 0.95rem;
+  }
+
+  .nav .site-views-dot {
+    width: 0.55rem;
+    height: 0.55rem;
   }
 
   .how,
