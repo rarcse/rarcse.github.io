@@ -25,6 +25,8 @@ const obfuscatorOptions = {
 const coursesPath = path.join(srcDir, "courses.js");
 const cityCoordsPath = path.join(srcDir, "city-coords.js");
 const uniWebsitesPath = path.join(srcDir, "university-websites.js");
+const germanyStatesPath = path.join(srcDir, "germany-states-embed.js");
+const logoEmbedPath = path.join(srcDir, "logo-embed.js");
 const appPath = path.join(srcDir, "app.js");
 
 const outputs = [];
@@ -39,6 +41,12 @@ if (fs.existsSync(coursesPath) && fs.existsSync(cityCoordsPath)) {
 }
 
 const appParts = [];
+if (fs.existsSync(germanyStatesPath)) {
+  appParts.push(fs.readFileSync(germanyStatesPath, "utf8"));
+}
+if (fs.existsSync(logoEmbedPath)) {
+  appParts.push(fs.readFileSync(logoEmbedPath, "utf8"));
+}
 if (fs.existsSync(uniWebsitesPath)) {
   appParts.push(fs.readFileSync(uniWebsitesPath, "utf8"));
 }

@@ -162,6 +162,15 @@
             </span>
             <span class="nav-item-label">UniGuide</span>
           </button>
+          <button type="button" class="nav-journey" id="nav-open-journey">
+            <span class="nav-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 21s-6.5-5.2-6.5-10A6.5 6.5 0 0 1 12 4.5 6.5 6.5 0 0 1 18.5 11c0 4.8-6.5 10-6.5 10Z" />
+                <circle cx="12" cy="11" r="2.2" />
+              </svg>
+            </span>
+            <span class="nav-item-label">Map &amp; Share</span>
+          </button>
           <a
             class="nav-special"
             href="https://rarcse.github.io/"
@@ -177,10 +186,18 @@
             </span>
             <span class="nav-item-label">Special Msc CS Programs</span>
           </a>
-        </div>
-        <div class="site-views" id="site-views" hidden title="Page views">
-          <span class="site-views-dot" aria-hidden="true"></span>
-          <span id="site-views-text"></span>
+          <div class="nav-views site-views" id="site-views" title="Page views" aria-live="polite">
+            <span class="nav-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2.5 12s3.5-6.5 9.5-6.5S21.5 12 21.5 12s-3.5 6.5-9.5 6.5S2.5 12 2.5 12Z" />
+                <circle cx="12" cy="12" r="2.4" />
+              </svg>
+            </span>
+            <span class="nav-item-label">
+              <span class="site-views-dot" aria-hidden="true"></span>
+              <span id="site-views-text"><span class="site-views-num">—</span><span class="site-views-label"> views</span></span>
+            </span>
+          </div>
         </div>
       </nav>
       <span class="header-spacer" aria-hidden="true"></span>
@@ -438,6 +455,110 @@
         <div id="watch-map-panel" class="watch-map-panel" hidden>
           <p class="watch-map-legend" id="watch-map-legend"></p>
           <div id="watch-map" class="watch-map" role="img" aria-label="Map of saved programmes in Germany"></div>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog id="journey-dialog" class="detail-dialog journey-dialog" aria-label="Map & Share">
+      <form method="dialog" class="detail-close-row">
+        <button value="close" class="detail-close" aria-label="Close Map & Share">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+            <path
+              d="M6.4 6.4a1 1 0 0 1 1.4 0L12 10.6l4.2-4.2a1 1 0 1 1 1.4 1.4L13.4 12l4.2 4.2a1 1 0 0 1-1.4 1.4L12 13.4l-4.2 4.2a1 1 0 0 1-1.4-1.4L10.6 12 6.4 7.8a1 1 0 0 1 0-1.4Z"
+              fill="currentColor"
+            />
+          </svg>
+        </button>
+      </form>
+      <div class="journey-shell">
+        <header class="journey-head">
+          <div>
+            <p class="journey-kicker">Share your shortlist</p>
+            <h2>Map &amp; Share</h2>
+            <p class="journey-lead">
+              Pick universities from UniHub, pin them on Germany, and export a poster with your profile.
+            </p>
+          </div>
+          <div class="journey-steps" aria-hidden="true">
+            <span class="journey-step is-active" data-journey-step="1">1 · Select</span>
+            <span class="journey-step" data-journey-step="2">2 · Image</span>
+          </div>
+        </header>
+
+        <div class="journey-layout">
+          <section class="journey-form-panel" aria-label="Journey details">
+            <div class="journey-fields">
+              <label class="journey-field">
+                <span>My name <em>*</em></span>
+                <input id="journey-name" type="text" autocomplete="name" placeholder="Your full name" required />
+              </label>
+              <label class="journey-field">
+                <span>Applicant type <em>*</em></span>
+                <select id="journey-type" required>
+                  <option value="">Select…</option>
+                  <option value="msc">MSc</option>
+                  <option value="bsc">BSc</option>
+                </select>
+              </label>
+              <label class="journey-field">
+                <span>BSc CGPA <em>*</em></span>
+                <input id="journey-cgpa" type="text" inputmode="decimal" placeholder="e.g. 3.45" required />
+              </label>
+              <label class="journey-field">
+                <span>Target intake <em>*</em></span>
+                <select id="journey-intake" required>
+                  <option value="">Select…</option>
+                  <option value="winter">Winter semester</option>
+                  <option value="summer">Summer semester</option>
+                  <option value="either">Winter or summer</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="journey-search-block">
+              <div class="journey-search-wrap">
+                <label class="journey-field">
+                  <span>Search UniHub universities or programmes</span>
+                  <input
+                    id="journey-search"
+                    type="search"
+                    placeholder="e.g. TU Dortmund, Cologne, Münster…"
+                    autocomplete="off"
+                  />
+                </label>
+                <div id="journey-suggestions" class="journey-suggestions" hidden></div>
+              </div>
+              <div id="journey-selected" class="journey-selected" aria-live="polite"></div>
+            </div>
+
+            <div class="journey-form-actions">
+              <button type="button" class="btn btn-secondary" id="journey-clear" disabled>Clear selection</button>
+              <button type="button" class="btn btn-primary" id="journey-generate" disabled>
+                Generate image
+              </button>
+            </div>
+            <p class="journey-form-hint" id="journey-hint">
+              Select up to 30 universities and fill the required fields.
+            </p>
+          </section>
+
+          <section class="journey-preview-panel" aria-label="Journey image">
+            <div class="journey-poster-card">
+              <div class="journey-poster-head">
+                <h3>Journey image</h3>
+                <div class="journey-poster-actions">
+                  <button type="button" class="btn btn-secondary" id="journey-download" disabled>Download PNG</button>
+                  <button type="button" class="btn btn-primary" id="journey-share" disabled>Share image</button>
+                </div>
+              </div>
+              <div class="journey-poster-frame">
+                <canvas id="journey-poster" width="1200" height="1550" aria-label="Journey map image"></canvas>
+                <p class="journey-poster-empty" id="journey-poster-empty">
+                  Your Germany map image will show here — colorful states, numbered pins, and uni names at the bottom.
+                </p>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     </dialog>
