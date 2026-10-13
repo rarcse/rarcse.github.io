@@ -319,7 +319,7 @@
                     autocomplete="off"
                   />
                   <button type="button" class="filter-search-btn" id="subject-filter-search-btn" aria-label="Search subjects">
-                    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="13" height="13" aria-hidden="true">
                       <circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.8" />
                       <path d="M16.2 16.2 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
                     </svg>
@@ -521,7 +521,29 @@
 
         function applySubjectSearch() {
           var q = (input.value || "").trim().toLowerCase();
-          list.querySelectorAll("label").forEach(function (label) {
+          list.querySelectorAll(".filter-subject-family").forEach(function (family) {
+            var parent = family.querySelector(".filter-subject-parent");
+            var panel = family.querySelector(".filter-subject-children");
+            var children = family.querySelectorAll(".filter-subject-children label");
+            var parentMatch = !q || ((parent && parent.textContent) || "").toLowerCase().indexOf(q) !== -1;
+            var anyChild = false;
+            children.forEach(function (label) {
+              var match = parentMatch || ((label.textContent || "").toLowerCase().indexOf(q) !== -1);
+              label.hidden = Boolean(q) && !match;
+              if (match) anyChild = true;
+            });
+            family.hidden = Boolean(q) && !parentMatch && !anyChild;
+            if (q && !family.hidden && anyChild) {
+              family.classList.add("is-open");
+              if (panel) panel.hidden = false;
+              var toggle = family.querySelector(".filter-subject-toggle");
+              if (toggle) {
+                toggle.setAttribute("aria-expanded", "true");
+                toggle.setAttribute("aria-label", "Collapse subgroups");
+              }
+            }
+          });
+          list.querySelectorAll(":scope > label").forEach(function (label) {
             var text = (label.textContent || "").toLowerCase();
             label.hidden = Boolean(q) && text.indexOf(q) === -1;
           });

@@ -25,7 +25,9 @@ const obfuscatorOptions = {
 const coursesPath = path.join(srcDir, "courses.js");
 const cityCoordsPath = path.join(srcDir, "city-coords.js");
 const uniWebsitesPath = path.join(srcDir, "university-websites.js");
+const statesEmbedPath = path.join(srcDir, "germany-states-embed.js");
 const appPath = path.join(srcDir, "app.js");
+const journeyPath = path.join(srcDir, "journey.js");
 
 const outputs = [];
 
@@ -39,10 +41,12 @@ if (fs.existsSync(coursesPath) && fs.existsSync(cityCoordsPath)) {
 }
 
 const appParts = [];
-if (fs.existsSync(uniWebsitesPath)) {
-  appParts.push(fs.readFileSync(uniWebsitesPath, "utf8"));
+for (const optional of [uniWebsitesPath, statesEmbedPath]) {
+  if (fs.existsSync(optional)) appParts.push(fs.readFileSync(optional, "utf8"));
 }
 appParts.push(fs.readFileSync(appPath, "utf8"));
+if (fs.existsSync(journeyPath)) appParts.push(fs.readFileSync(journeyPath, "utf8"));
+appParts.push("\ninit();\n");
 outputs.push({ name: "app.js", source: appParts.join("\n") });
 
 for (const file of outputs) {
