@@ -2145,10 +2145,10 @@ body.drawer-open {
   order: 10;
   margin-left: 0;
   min-height: 2.55rem;
-  padding: 0.35rem 0.75rem;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: color-mix(in srgb, var(--accent) 10%, rgba(255, 255, 255, 0.7));
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
   color: var(--ink);
   font-size: 0.78rem;
   font-weight: 700;
