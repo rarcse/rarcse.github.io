@@ -1,0 +1,51 @@
+---
+description: PSR-12 and Laravel PHP coding standards for this project
+globs: "**/*.php"
+alwaysApply: false
+---
+
+# PHP: PSR-12 + Laravel
+
+Strictly follow **PSR-12** when writing, reviewing, refactoring, or modifying PHP.
+
+## Formatting
+
+- 4 spaces; one statement per line; short arrays `[]`; trailing commas in multiline arrays
+- PSR-12 braces, namespaces, imports, blank lines, operators, control structures
+- Format classes, methods, properties, constants, and parameters consistently
+
+## Naming
+
+- Classes: `PascalCase` (`UserService`)
+- Methods/variables: `camelCase` (`getUserById`, `$userName`)
+- Constants: `UPPER_SNAKE` (`MAX_RETRIES`)
+
+## Structure
+
+- Single responsibility; keep methods small
+- Prefer services for business logic over fat controllers
+- Avoid duplication; match existing architecture
+- No unnecessary patterns, classes, or dependencies
+
+## Laravel
+
+- Follow Laravel conventions (controllers, models, services, Form Requests, resources, migrations)
+- Use DI, Eloquent/query builder appropriately
+- Validate requests; handle errors properly
+- Preserve routes, business logic, API contracts, and DB behavior unless explicitly asked to change them
+
+## Preferences
+
+- Prefer full closures over arrow functions
+- Use `strict_types` when appropriate and compatible with the project
+- Add parameter and return types whenever practical
+- Avoid complex ternaries and deep nesting
+- Do not change unrelated code during refactors
+
+## Before finishing
+
+- Review modified PHP for PSR-12; remove unused imports/variables
+- Check syntax/logic; run tests and style checks (`vendor/bin/pint`) when possible
+- Report any checks that could not be run
+
+Prioritize correctness, readability, maintainability, and minimal diffs.
