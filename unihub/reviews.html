@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://ekirrmhderenoebqxwjt.supabase.co; form-action 'none'; base-uri 'self'; object-src 'none'"
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta
+      name="description"
+      content="Student reviews of Germany UniHub — what applicants say about exploring BSc &amp; MSc programmes in Germany."
+    />
+    <meta property="og:title" content="Student Reviews — Germany UniHub" />
+    <meta
+      property="og:description"
+      content="Read demo student voices about using Germany UniHub to explore universities and programmes in Germany."
+    />
+    <meta property="og:image" content="assets/og-banner.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="assets/og-banner.png" />
+    <link rel="icon" href="assets/logo.png" type="image/png" />
+    <title>Student Reviews — Germany UniHub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,600;6..72,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="about-page static-page reviews-page">
+    <a class="skip-link" href="#reviews-all">Skip to content</a>
+
+    <header class="site-header">
+      <a class="brand" href="index.html#top">
+        <img class="brand-logo" src="assets/logo.png" alt="" width="40" height="40" />
+        <span class="brand-text">
+          <span class="brand-name"><span class="brand-full">Germany </span><em>UniHub</em></span>
+          <span class="brand-tag"><span aria-hidden="true">🇩🇪</span> BSc &amp; MSc Programme Finder</span>
+        </span>
+      </a>
+      <nav class="nav" id="site-nav" aria-label="Main menu">
+        <div class="nav-drawer-head">
+          <div class="nav-drawer-heading">
+            <p class="nav-drawer-kicker">Browse</p>
+            <strong class="nav-drawer-title">Germany UniHub</strong>
+          </div>
+          <button type="button" class="nav-drawer-close" id="nav-drawer-close" aria-label="Close menu">
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+              <path
+                d="M6.4 6.4a1 1 0 0 1 1.4 0L12 10.6l4.2-4.2a1 1 0 1 1 1.4 1.4L13.4 12l4.2 4.2a1 1 0 0 1-1.4 1.4L12 13.4l-4.2 4.2a1 1 0 0 1-1.4-1.4L10.6 12 6.4 7.8a1 1 0 0 1 0-1.4Z"
+                fill="currentColor"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="nav-drawer-links">
+          <a class="nav-about" href="about.html">
+            <span class="nav-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 11v5" />
+                <circle cx="12" cy="8" r="1" fill="currentColor" stroke="none" />
+              </svg>
+            </span>
+            <span class="nav-item-label">About</span>
+          </a>
+          <a class="nav-faq" href="faq.html">
+            <span class="nav-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M9.5 9.5a2.5 2.5 0 1 1 3.7 2.2c-.8.5-1.2 1-1.2 1.8V14" />
+                <circle cx="12" cy="17" r="0.9" fill="currentColor" stroke="none" />
+              </svg>
+            </span>
+            <span class="nav-item-label">FAQ</span>
+          </a>
+          <a class="nav-guide" href="index.html">
+            <span class="nav-item-icon" aria-hidden="true">
+              <svg class="guide-ai-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                <path
+                  d="M12 3.2 13.1 7.4 17.2 8.5 13.1 9.6 12 13.8 10.9 9.6 6.8 8.5 10.9 7.4 12 3.2Z"
+                  fill="currentColor"
+                />
+                <path
+                  d="M18.2 13.2 18.8 15.4 21 16 18.8 16.6 18.2 18.8 17.6 16.6 15.4 16 17.6 15.4 18.2 13.2Z"
+                  fill="currentColor"
+                />
+                <path
+                  d="M6.4 14.2 7.1 16.6 9.4 17.2 7.1 17.8 6.4 20.2 5.7 17.8 3.4 17.2 5.7 16.6 6.4 14.2Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </span>
+            <span class="nav-item-label">UniGuide</span>
+          </a>
+          <a
+            class="nav-special nav-special-mobile"
+            href="https://rarcse.github.io/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span class="nav-item-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3 3.5 7.5 12 12l8.5-4.5L12 3Z" />
+                <path d="M3.5 12.5 12 17l8.5-4.5" />
+                <path d="M3.5 17.5 12 22l8.5-4.5" />
+              </svg>
+            </span>
+            <span class="nav-item-label">Special Msc CS Programs</span>
+          </a>
+        </div>
+      </nav>
+      <span class="header-spacer" aria-hidden="true"></span>
+      <div class="header-actions">
+        <a class="header-about" href="about.html">About</a>
+        <a class="header-faq" href="faq.html">FAQ</a>
+        <a class="header-watch" href="index.html" title="Watchlist">
+          <svg class="watch-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path
+              d="M6.5 4.75h11c.69 0 1.25.56 1.25 1.25v13.1a.75.75 0 0 1-1.2.6L12 15.35l-5.55 4.35a.75.75 0 0 1-1.2-.6V6c0-.69.56-1.25 1.25-1.25Z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span class="watch-label">Watchlist</span>
+        </a>
+        <a class="header-guide" href="index.html" title="Open UniGuide">
+          <svg class="guide-ai-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+            <path
+              d="M12 3.2 13.1 7.4 17.2 8.5 13.1 9.6 12 13.8 10.9 9.6 6.8 8.5 10.9 7.4 12 3.2Z"
+              fill="currentColor"
+            />
+            <path
+              d="M18.2 13.2 18.8 15.4 21 16 18.8 16.6 18.2 18.8 17.6 16.6 15.4 16 17.6 15.4 18.2 13.2Z"
+              fill="currentColor"
+            />
+            <path
+              d="M6.4 14.2 7.1 16.6 9.4 17.2 7.1 17.8 6.4 20.2 5.7 17.8 3.4 17.2 5.7 16.6 6.4 14.2Z"
+              fill="currentColor"
+            />
+          </svg>
+          UniGuide
+        </a>
+        <a
+          class="nav-special nav-special-desktop"
+          href="https://rarcse.github.io/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="nav-item-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3 3.5 7.5 12 12l8.5-4.5L12 3Z" />
+              <path d="M3.5 12.5 12 17l8.5-4.5" />
+              <path d="M3.5 17.5 12 22l8.5-4.5" />
+            </svg>
+          </span>
+          <span class="nav-item-label">Special MSc CS</span>
+        </a>
+        <button
+          type="button"
+          class="nav-toggle"
+          id="nav-toggle"
+          aria-expanded="false"
+          aria-controls="site-nav"
+          aria-label="Open menu"
+        >
+          <svg class="nav-toggle-menu" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path
+              d="M4 7.5h16M4 12h16M4 16.5h10"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+            />
+          </svg>
+          <svg class="nav-toggle-close" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path
+              d="M6.4 6.4a1 1 0 0 1 1.4 0L12 10.6l4.2-4.2a1 1 0 1 1 1.4 1.4L13.4 12l4.2 4.2a1 1 0 0 1-1.4 1.4L12 13.4l-4.2 4.2a1 1 0 0 1-1.4-1.4L10.6 12 6.4 7.8a1 1 0 0 1 0-1.4Z"
+              fill="currentColor"
+            />
+          </svg>
+        </button>
+      </div>
+    </header>
+    <div class="nav-backdrop" id="nav-backdrop" aria-hidden="true"></div>
+
+    <main id="reviews-all" class="about">
+      <article class="about-panel">
+        <header class="about-hero">
+          <p class="about-kicker">Student voices</p>
+          <h1>What students say <span aria-hidden="true">🇩🇪</span></h1>
+          <p class="about-lead">
+            Real reviews from students using Germany UniHub to explore BSc &amp; MSc options across Germany.
+          </p>
+          <div class="reviews-page-actions">
+            <button type="button" class="reviews-add-btn" data-review-open>
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M12 5v14M5 12h14" />
+              </svg>
+              Add your review
+            </button>
+            <span class="reviews-page-hint">Reviews are published after a quick check.</span>
+          </div>
+        </header>
+
+        <div class="reviews-all-grid" id="reviews-all-grid" aria-live="polite" aria-busy="true"></div>
+        <p class="reviews-state" id="reviews-all-state">Loading reviews…</p>
+
+        <a class="reviews-page-back" href="index.html#reviews">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 6 9 12l6 6" />
+          </svg>
+          Back to home
+        </a>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <img class="footer-logo" src="assets/logo.png" alt="" width="40" height="40" />
+          <div class="footer-brand-text">
+            <strong class="footer-name">Germany UniHub</strong>
+            <span class="footer-tag"><span aria-hidden="true">🇩🇪</span> BSc &amp; MSc Programme Finder</span>
+          </div>
+        </div>
+
+        <p class="footer-desc">
+          Helping students explore study opportunities in Germany.
+          <a class="footer-about-link" href="reviews.html">Reviews</a>
+        </p>
+
+        <p class="footer-locale" aria-label="Germany and Bangladesh">
+          <span class="footer-locale-item"><span aria-hidden="true">🇩🇪</span> Germany</span>
+          <span class="footer-locale-swap" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M7 7h11l-3-3M17 17H6l3 3" />
+            </svg>
+          </span>
+          <span class="footer-locale-item"><span aria-hidden="true">🇧🇩</span> Bangladesh</span>
+        </p>
+
+        <div class="footer-note">
+          <svg class="footer-note-icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7" />
+            <path d="M12 11v5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+            <circle cx="12" cy="8" r="1" fill="currentColor" />
+          </svg>
+          <p>
+            Data sourced from DAAD. Always verify programme requirements and deadlines on official university
+            websites.
+          </p>
+        </div>
+
+        <div class="footer-bottom">
+          <p class="footer-copy">© 2026 Germany UniHub</p>
+          <p class="footer-byline">Designed &amp; built by <em>_rar</em></p>
+        </div>
+      </div>
+    </footer>
+
+    <dialog id="review-dialog" class="review-dialog" aria-labelledby="review-dialog-title">
+      <div class="review-dialog-inner">
+        <div class="review-dialog-head">
+          <div>
+            <p class="about-kicker">Share your experience</p>
+            <h2 id="review-dialog-title">Add your review</h2>
+          </div>
+          <button type="button" class="review-dialog-close" data-review-close aria-label="Close">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+              <path
+                d="M6.4 6.4a1 1 0 0 1 1.4 0L12 10.6l4.2-4.2a1 1 0 1 1 1.4 1.4L13.4 12l4.2 4.2a1 1 0 0 1-1.4 1.4L12 13.4l-4.2 4.2a1 1 0 0 1-1.4-1.4L10.6 12 6.4 7.8a1 1 0 0 1 0-1.4Z"
+                fill="currentColor"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <form id="review-form" class="review-form" autocomplete="off">
+          <div class="review-field">
+            <label for="review-name">Name <span class="review-req" aria-hidden="true">*</span></label>
+            <input id="review-name" name="name" type="text" required minlength="2" maxlength="60" autocomplete="name" spellcheck="false" />
+          </div>
+
+          <div class="review-field-row">
+            <div class="review-field">
+              <label for="review-email">Email <span class="review-req" aria-hidden="true">*</span></label>
+              <input id="review-email" name="email" type="email" required maxlength="254" autocomplete="email" inputmode="email" spellcheck="false" placeholder="you@example.com" />
+            </div>
+            <div class="review-field">
+              <label for="review-phone">Phone <span class="review-req" aria-hidden="true">*</span></label>
+              <input id="review-phone" name="phone" type="tel" required maxlength="30" autocomplete="tel" inputmode="tel" placeholder="+880 1712 345678" />
+            </div>
+          </div>
+          <p class="review-contact-note">
+            Email and phone are never shown publicly.
+          </p>
+
+          <div class="review-field">
+            <label for="review-university">Current/Last University <span class="review-req" aria-hidden="true">*</span></label>
+            <input id="review-university" name="university" type="text" required minlength="2" maxlength="100" placeholder="e.g. TU Munich" />
+          </div>
+
+          <div class="review-field-row">
+            <fieldset class="review-field">
+              <legend>Type <span class="review-req" aria-hidden="true">*</span></legend>
+              <div class="degree-toggle">
+                <input type="radio" id="review-type-bsc" name="degree_type" value="BSc" required />
+                <label for="review-type-bsc">BSc</label>
+                <input type="radio" id="review-type-msc" name="degree_type" value="MSc" />
+                <label for="review-type-msc">MSc</label>
+              </div>
+            </fieldset>
+            <div class="review-field">
+              <label for="review-designation">Designation <span class="review-optional">(if any, optional)</span></label>
+              <input id="review-designation" name="designation" type="text" minlength="2" maxlength="60" placeholder="e.g. Software Engineer" />
+            </div>
+          </div>
+
+          <fieldset class="review-field review-rating-field">
+            <legend>Rating <span class="review-req" aria-hidden="true">*</span></legend>
+            <div class="rating-input">
+              <input type="radio" id="review-rating-1" name="rating" value="1" required />
+              <label for="review-rating-1"><span aria-hidden="true">★</span><span class="sr-only">1 star</span></label>
+              <input type="radio" id="review-rating-2" name="rating" value="2" />
+              <label for="review-rating-2"><span aria-hidden="true">★</span><span class="sr-only">2 stars</span></label>
+              <input type="radio" id="review-rating-3" name="rating" value="3" />
+              <label for="review-rating-3"><span aria-hidden="true">★</span><span class="sr-only">3 stars</span></label>
+              <input type="radio" id="review-rating-4" name="rating" value="4" />
+              <label for="review-rating-4"><span aria-hidden="true">★</span><span class="sr-only">4 stars</span></label>
+              <input type="radio" id="review-rating-5" name="rating" value="5" />
+              <label for="review-rating-5"><span aria-hidden="true">★</span><span class="sr-only">5 stars</span></label>
+            </div>
+          </fieldset>
+
+          <div class="review-field">
+            <label for="review-comment">Your review <span class="review-req" aria-hidden="true">*</span></label>
+            <textarea id="review-comment" name="comment" rows="5" required minlength="20" maxlength="500" placeholder="How did Germany UniHub help your search?" aria-describedby="review-comment-help review-comment-count"></textarea>
+            <div class="review-field-foot">
+              <span id="review-comment-help">Up to 45 words. No links.</span>
+              <span id="review-comment-count" class="review-count" aria-live="polite">0 / 45 words</span>
+            </div>
+          </div>
+
+          <div class="review-hp" aria-hidden="true">
+            <label for="review-website">Leave this field empty</label>
+            <input id="review-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <p id="review-form-status" class="review-form-status" role="status" aria-live="polite" hidden></p>
+
+          <div class="review-form-actions">
+            <button type="button" class="review-btn-secondary" data-review-close>Cancel</button>
+            <button type="submit" class="reviews-add-btn">Submit review</button>
+          </div>
+          <p class="review-privacy">
+            Only your name, university, designation, rating, and review are shown publicly once approved.
+            Your email and phone stay private.
+          </p>
+        </form>
+
+        <div id="review-success" class="review-success" hidden>
+          <span class="review-success-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m5 12.5 4.5 4.5L19 7.5" />
+            </svg>
+          </span>
+          <h3>Thank you!</h3>
+          <p>
+            Your review was received and will appear here once it’s approved. If you’d already submitted one with
+            this email or phone, it has been replaced.
+          </p>
+          <button type="button" class="reviews-add-btn" data-review-close>Done</button>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog id="review-detail-dialog" class="review-dialog review-detail-dialog" aria-labelledby="review-detail-name">
+      <div class="review-dialog-inner">
+        <div class="review-dialog-head">
+          <div class="review-stars" id="review-detail-stars"></div>
+          <button type="button" class="review-dialog-close" data-review-detail-close aria-label="Close">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+              <path
+                d="M6.4 6.4a1 1 0 0 1 1.4 0L12 10.6l4.2-4.2a1 1 0 1 1 1.4 1.4L13.4 12l4.2 4.2a1 1 0 0 1-1.4 1.4L12 13.4l-4.2 4.2a1 1 0 0 1-1.4-1.4L10.6 12 6.4 7.8a1 1 0 0 1 0-1.4Z"
+                fill="currentColor"
+              />
+            </svg>
+          </button>
+        </div>
+        <p class="review-detail-comment" id="review-detail-comment"></p>
+        <div class="review-meta">
+          <span class="review-avatar" id="review-detail-avatar" aria-hidden="true"></span>
+          <div>
+            <strong class="review-name" id="review-detail-name"></strong>
+            <span class="review-uni" id="review-detail-uni"></span>
+            <span class="review-role" id="review-detail-role"></span>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
+    <script src="dist/reviews.js" defer></script>
+  </body>
+</html>

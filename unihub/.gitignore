@@ -3,4 +3,5 @@
 .vscode/
 .idea/
 src/
+sql/
 node_modules/

@@ -20,8 +20,13 @@ const obfuscatorOptions = {
   stringArrayThreshold: 0.75,
 };
 
-for (const file of ['data.js', 'app.js']) {
-  const src = fs.readFileSync(path.join(__dirname, 'src', file), 'utf8');
+for (const file of ['data.js', 'app.js', 'admin-reviews.js']) {
+  const srcPath = path.join(__dirname, 'src', file);
+  if (!fs.existsSync(srcPath)) {
+    console.log(`src/${file} not found, skipped`);
+    continue;
+  }
+  const src = fs.readFileSync(srcPath, 'utf8');
   const result = JavaScriptObfuscator.obfuscate(src, obfuscatorOptions);
   fs.writeFileSync(path.join(distDir, file), result.getObfuscatedCode());
   console.log(`dist/${file} written`);

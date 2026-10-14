@@ -49,6 +49,11 @@ if (fs.existsSync(journeyPath)) appParts.push(fs.readFileSync(journeyPath, "utf8
 appParts.push("\ninit();\n");
 outputs.push({ name: "app.js", source: appParts.join("\n") });
 
+const reviewsPath = path.join(srcDir, "reviews.js");
+if (fs.existsSync(reviewsPath)) {
+  outputs.push({ name: "reviews.js", source: fs.readFileSync(reviewsPath, "utf8") });
+}
+
 for (const file of outputs) {
   const result = JavaScriptObfuscator.obfuscate(file.source, obfuscatorOptions);
   const outPath = path.join(distDir, file.name);
