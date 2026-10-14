@@ -54,6 +54,11 @@ if (fs.existsSync(reviewsPath)) {
   outputs.push({ name: "reviews.js", source: fs.readFileSync(reviewsPath, "utf8") });
 }
 
+const siteViewsPath = path.join(srcDir, "site-views.js");
+if (fs.existsSync(siteViewsPath)) {
+  outputs.push({ name: "site-views.js", source: fs.readFileSync(siteViewsPath, "utf8") });
+}
+
 for (const file of outputs) {
   const result = JavaScriptObfuscator.obfuscate(file.source, obfuscatorOptions);
   const outPath = path.join(distDir, file.name);

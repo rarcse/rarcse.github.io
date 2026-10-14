@@ -306,6 +306,10 @@
 
         <div class="footer-bottom">
           <p class="footer-copy">© 2026 Germany UniHub</p>
+          <div class="site-views" id="site-views" hidden title="Page views" aria-live="polite">
+            <span class="site-views-dot" aria-hidden="true"></span>
+            <span id="site-views-text"></span>
+          </div>
           <p class="footer-byline">Designed &amp; built by <em>_rar</em></p>
         </div>
       </div>
@@ -336,5 +340,6 @@
         backdrop && backdrop.addEventListener("click", closeNav);
       })();
     </script>
+    <script src="dist/site-views.js" defer></script>
   </body>
 </html>
