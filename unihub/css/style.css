@@ -108,7 +108,23 @@ select {
   gap: 1rem;
   padding: env(safe-area-inset-top, 0px) clamp(0.85rem, 3vw, 2rem) 0;
   background: rgba(255, 255, 255, 0.92);
-  border-bottom: 1px solid rgba(213, 222, 234, 0.55);
+  border-bottom: 0;
+}
+
+.site-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    #111 0 33.34%,
+    var(--flag-red) 33.34% 66.67%,
+    var(--flag-gold) 66.67% 100%
+  );
+  pointer-events: none;
 }
 
 .brand {
@@ -524,7 +540,7 @@ select {
   justify-content: space-between;
   margin-bottom: 1.35rem;
   padding: 1.15rem 1.2rem 1.15rem;
-  border: 1px solid color-mix(in srgb, var(--accent) 26%, var(--line));
+  border: 0;
   border-radius: 20px;
   background:
     radial-gradient(ellipse 70% 120% at 100% 0%, rgba(18, 131, 255, 0.14), transparent 55%),
@@ -535,22 +551,6 @@ select {
     inset 0 1px 0 rgba(255, 255, 255, 0.85);
   overflow: hidden;
   animation: rise 0.5s ease both;
-}
-
-.match-strip::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 3px;
-  background: linear-gradient(
-    90deg,
-    #111 0 22%,
-    var(--flag-red) 22% 44%,
-    var(--flag-gold) 44% 66%,
-    var(--accent) 66%
-  );
 }
 
 .match-strip-main {
@@ -2387,14 +2387,31 @@ body.drawer-open {
   outline-offset: 3px;
 }
 
+.reviews-head-actions,
+.reviews-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+}
+
 .reviews-footer-actions {
   display: grid;
   gap: 0.65rem;
   justify-items: center;
 }
 
+.reviews-footer-links,
 .reviews-view-all-mobile {
   display: none;
+}
+
+a.reviews-add-home {
+  min-height: 2.5rem;
+  padding: 0.5rem 1.05rem;
+  font-size: 0.9rem;
+  text-decoration: none;
+  box-shadow: 0 6px 14px rgba(18, 131, 255, 0.18);
 }
 
 .reviews-slider {
@@ -2655,8 +2672,13 @@ body.drawer-open {
     padding-bottom: 2.5rem;
   }
 
-  .reviews-head-top .reviews-view-all {
+  .reviews-head-actions {
     display: none;
+  }
+
+  .reviews-footer-links {
+    display: flex;
+    justify-content: center;
   }
 
   .reviews-view-all-mobile {
