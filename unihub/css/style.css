@@ -3775,10 +3775,26 @@ a.reviews-add-home {
   color: #64748b;
 }
 
+.footer-byline a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.footer-byline a:hover,
+.footer-byline a:focus-visible {
+  color: #93c5fd;
+  text-decoration: underline;
+}
+
 .footer-byline em {
   font-style: italic;
   font-weight: 600;
   color: #e2e8f0;
+}
+
+.about-panel a em {
+  font-style: italic;
+  font-weight: 600;
 }
 
 @media (max-width: 640px) {
