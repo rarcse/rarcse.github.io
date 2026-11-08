@@ -192,16 +192,6 @@
     return [...groups.values()];
   }
 
-  function openProgrammes(academy) {
-    const input = document.getElementById("q");
-    const section = document.getElementById("programmes");
-    if (input) {
-      input.value = academy;
-      input.dispatchEvent(new Event("input", { bubbles: true }));
-    }
-    section?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }
-
   function renderPanel() {
     const title = document.getElementById("uni-map-panel-title");
     const sub = document.getElementById("uni-map-panel-sub");
@@ -247,25 +237,58 @@
     const items = institutions.filter((item) => item.state === selectedState);
     title.textContent = selectedState;
     if (sub) {
-      sub.textContent = items.length + " institution" + (items.length === 1 ? "" : "s");
+      sub.textContent = items.length + " universit" + (items.length === 1 ? "y" : "ies");
     }
     statesEl.hidden = true;
     listEl.hidden = false;
     listEl.innerHTML = items.length
       ? items
           .map(
-            (item) =>
-              '<button type="button" class="uni-map-institution" data-academy="' +
-              escapeHtml(item.academy) +
-              '"><strong>' +
-              escapeHtml(item.academy) +
-              "</strong><span>" +
-              escapeHtml(item.city) +
-              (item.programmes ? " · " + item.programmes + " programmes" : "") +
-              "</span></button>"
+            (item) => {
+              const programmeLabel = item.programmes === 1 ? "programme" : "programmes";
+              const programmes = item.programmes
+                ? '<span class="uni-map-institution-count" title="' +
+                  item.programmes +
+                  " " +
+                  programmeLabel +
+                  '"><span class="uni-map-institution-count-num">' +
+                  item.programmes +
+                  '</span><span class="uni-map-institution-count-label">' +
+                  programmeLabel +
+                  "</span></span>"
+                : "";
+              const link = item.website
+                ? '<a class="uni-map-institution-link" href="' +
+                  escapeHtml(item.website) +
+                  '" target="_blank" rel="noopener noreferrer">' +
+                  '<span class="uni-map-institution-link-text">Official website</span>' +
+                  '<svg class="uni-map-institution-link-icon" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" focusable="false">' +
+                  '<path d="M14 4h6v6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+                  '<path d="M10 14 20 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+                  '<path d="M20 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+                  "</svg></a>"
+                : "";
+              return (
+                '<article class="uni-map-institution">' +
+                '<div class="uni-map-institution-head">' +
+                '<h4 class="uni-map-institution-name" title="' +
+                escapeHtml(item.academy) +
+                '">' +
+                escapeHtml(item.academy) +
+                "</h4>" +
+                programmes +
+                "</div>" +
+                '<div class="uni-map-institution-foot">' +
+                '<p class="uni-map-institution-city">' +
+                escapeHtml(item.city) +
+                "</p>" +
+                link +
+                "</div></article>"
+              );
+            }
           )
           .join("")
-      : '<p class="uni-map-empty">No mapped institutions in this state yet.</p>';
+      : '<p class="uni-map-empty">No mapped universities in this state yet.</p>';
   }
 
   function renderMarkers() {
@@ -347,10 +370,21 @@
     const counts = countsByState();
     const total = institutions.length;
     select.innerHTML =
-      '<option value="">All of Germany (' + total + " institutions)</option>" +
+      '<option value="">All of Germany (' + total + " universities)</option>" +
       STATES.map((name) => {
         const count = counts.get(name) || 0;
-        return '<option value="' + escapeHtml(name) + '">' + escapeHtml(name) + " (" + count + ")</option>";
+        const unit = count === 1 ? "university" : "universities";
+        return (
+          '<option value="' +
+          escapeHtml(name) +
+          '">' +
+          escapeHtml(name) +
+          " (" +
+          count +
+          " " +
+          unit +
+          ")</option>"
+        );
       }).join("");
   }
 
@@ -395,11 +429,6 @@
       const button = event.target.closest("[data-state]");
       if (!button || button.disabled) return;
       selectState(button.dataset.state || "");
-    });
-    document.getElementById("uni-map-list")?.addEventListener("click", (event) => {
-      const button = event.target.closest("[data-academy]");
-      if (!button) return;
-      openProgrammes(button.dataset.academy || "");
     });
     let resizeTimer;
     const refreshMapSize = () => {
