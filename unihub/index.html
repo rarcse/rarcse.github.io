@@ -269,6 +269,30 @@
     <div class="nav-backdrop" id="nav-backdrop" aria-hidden="true"></div>
 
     <main id="top">
+      <section class="uni-map-section" id="university-map" aria-labelledby="uni-map-title">
+        <div class="uni-map-head">
+          <p class="uni-map-kicker">Interactive map</p>
+          <h2 id="uni-map-title">University map <span aria-hidden="true">🇩🇪</span></h2>
+          <p class="section-lead">See where UniHub universities sit across Germany, state by state.</p>
+        </div>
+        <div class="uni-map-toolbar">
+          <label class="sr-only" for="uni-map-state">Federal state</label>
+          <select id="uni-map-state" class="uni-map-select">
+            <option value="">All of Germany</option>
+          </select>
+          <button type="button" class="uni-map-back" id="uni-map-back" hidden>← Back to full Germany map</button>
+        </div>
+        <div class="uni-map-layout">
+          <div id="uni-map-canvas" class="uni-map-canvas" role="img" aria-label="Map of universities in Germany"></div>
+          <aside class="uni-map-panel" aria-label="Institutions">
+            <h3 id="uni-map-panel-title">All federal states</h3>
+            <p id="uni-map-panel-sub">Loading the directory…</p>
+            <div class="uni-map-states" id="uni-map-states"></div>
+            <div class="uni-map-list" id="uni-map-list" hidden></div>
+          </aside>
+        </div>
+      </section>
+
       <section class="programmes" id="programmes">
         <div class="match-strip" id="match-strip" hidden>
           <div class="match-strip-main">
@@ -547,13 +571,16 @@
       </div>
     </dialog>
 
+    <script src="dist/data.js"></script>
+    <script src="js/germany-states.js"></script>
+    <script src="js/uni-websites.js"></script>
+    <script src="js/home-university-map.js" defer></script>
     <script
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
       integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
       crossorigin=""
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="dist/data.js"></script>
     <script src="dist/app.js" defer></script>
     <script>
       (function () {
