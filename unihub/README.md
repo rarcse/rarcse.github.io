@@ -16,6 +16,17 @@ dist/app.js      # built
 dist/data.js     # built
 ```
 
+## Import study programmes (MyGermanUniversity dump)
+
+Place `study-programs.json` at `unihub/data/raw/study-programs.json` (gitignored), then:
+
+```bash
+npm run import:study-programs
+npm run build:unihub
+```
+
+This rebuilds `src/courses.js` from the full programme dump (all languages/degrees), infers subject groups from programme names, enriches ranking programme counts, and refreshes the Universities **All** tab.
+
 ## Build
 
 From the repo root (needs `javascript-obfuscator`):

@@ -72,6 +72,37 @@
     return "";
   }
 
+  const CITY_ALIASES = {
+    cologne: "Köln",
+    munich: "München",
+    nuremberg: "Nürnberg",
+    nurnberg: "Nürnberg",
+    hanover: "Hannover",
+    brunswick: "Braunschweig",
+    "frankfurt main": "Frankfurt am Main",
+    munster: "Münster",
+    goettingen: "Göttingen",
+    gottingen: "Göttingen",
+    duesseldorf: "Düsseldorf",
+    dusseldorf: "Düsseldorf",
+    saarbrucken: "Saarbrücken",
+    lubeck: "Lübeck",
+    lueneburg: "Lüneburg",
+    tuebingen: "Tübingen",
+    wurzburg: "Würzburg",
+    wuerzburg: "Würzburg",
+  };
+
+  function normalizeCityKey(name) {
+    return String(name || "")
+      .normalize("NFKD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/\(.*?\)/g, " ")
+      .replace(/[^a-z0-9]+/g, " ")
+      .trim();
+  }
+
   function cityCoord(city) {
     const table = window.UNIHUB_CITY_COORDS || {};
     const name = String(city || "").replace(/\s+/g, " ").trim();
@@ -82,12 +113,24 @@
       const found = Object.keys(table).find((key) => key.replace(/\s+/g, " ").trim().toLowerCase() === lower);
       if (found) hit = table[found];
     }
+    if (!hit) {
+      const key = normalizeCityKey(name);
+      const alias = CITY_ALIASES[key];
+      if (alias && table[alias]) hit = table[alias];
+      if (!hit) {
+        const found = Object.keys(table).find((entry) => normalizeCityKey(entry) === key);
+        if (found) hit = table[found];
+      }
+    }
     if (!hit || !Number.isFinite(hit.lat) || !Number.isFinite(hit.lng)) return null;
     return hit;
   }
 
   function buildInstitutions() {
-    const courses = window.UNIHUB_DATA?.courses || [];
+    const hiddenTypes = new Set([11, 12]);
+    const courses = (window.UNIHUB_DATA?.courses || []).filter(
+      (course) => !hiddenTypes.has(Number(course.type))
+    );
     const geo = window.UNIHUB_GERMANY_STATES;
     const sites = window.UNI_WEBSITES || {};
     const byName = new Map();
@@ -192,6 +235,21 @@
     return [...groups.values()];
   }
 
+  function updateLeadCopy() {
+    const lead = document.getElementById("uni-map-lead");
+    if (!lead) return;
+    const total = institutions.length;
+    if (!total) {
+      lead.textContent =
+        "Explore UniHub universities on the map — filter by federal state to browse the directory.";
+      return;
+    }
+    lead.textContent =
+      "Explore " +
+      total.toLocaleString("en-GB") +
+      " mapped universities across Germany — pick a federal state to zoom in on the full directory.";
+  }
+
   function renderPanel() {
     const title = document.getElementById("uni-map-panel-title");
     const sub = document.getElementById("uni-map-panel-sub");
@@ -210,8 +268,10 @@
     if (!selectedState) {
       title.textContent = "All federal states";
       if (sub) {
+        const total = institutions.length;
         sub.textContent =
-          "Pick a state in the list, on the map, or tap a blue dot to open its universities.";
+          total.toLocaleString("en-GB") +
+          " universities mapped · pick a state in the list, on the map, or tap a blue dot.";
       }
       statesEl.hidden = false;
       listEl.hidden = true;
@@ -473,6 +533,7 @@
     }
     bind();
     fillSelect();
+    updateLeadCopy();
     renderPanel();
     const bootMap = () => {
       try {

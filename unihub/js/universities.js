@@ -28,8 +28,14 @@
   }
 
   function tuitionLabel(value) {
-    if (value == null || value === "" || value === 0 || value === "0") return "Free / varies";
+    if (value == null || value === "") return "—";
+    if (value === 0 || value === "0") return "Free / varies";
     return "€" + String(value);
+  }
+
+  function studentsLabel(value) {
+    if (value == null || value === "") return "—";
+    return String(value);
   }
 
   function activeTab() {
@@ -44,7 +50,7 @@
     var q = ((els.search && els.search.value) || "").trim().toLowerCase();
     if (!q) return items;
     return items.filter(function (item) {
-      return [item.name, item.type, item.control, item.ranking, item.rank]
+      return [item.name, item.type, item.control, item.ranking, item.rank, item.city]
         .join(" ")
         .toLowerCase()
         .indexOf(q) !== -1;
@@ -108,14 +114,15 @@
           '<p class="uni-card-meta">' +
           escapeHtml(item.type || "University") +
           (item.control ? " · " + escapeHtml(item.control) : "") +
+          (item.city ? " · " + escapeHtml(item.city) : "") +
           "</p>" +
           "</div></div>" +
           '<dl class="uni-card-facts">' +
           "<div><dt>Programmes</dt><dd>" +
-          escapeHtml(item.programs) +
+          escapeHtml(item.programs == null ? "—" : item.programs) +
           "</dd></div>" +
           "<div><dt>Students</dt><dd>" +
-          escapeHtml(item.students) +
+          escapeHtml(studentsLabel(item.students)) +
           "</dd></div>" +
           "<div><dt>Tuition</dt><dd>" +
           escapeHtml(tuitionLabel(item.tuition)) +

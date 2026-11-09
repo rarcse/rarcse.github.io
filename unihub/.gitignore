@@ -1,7 +1,8 @@
+src/
+sql/
+node_modules/
+data/raw/
 .DS_Store
 *.local
 .vscode/
 .idea/
-src/
-sql/
-node_modules/
